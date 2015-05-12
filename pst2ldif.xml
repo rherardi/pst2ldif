@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:directoryManager source="PST" target="LDIF"
+	xmlns:tns="http://www.gssnet.com/pst2ldif"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.gssnet.com/pst2ldif pst2ldif.xsd ">
+
+	<!-- Global configuration settings -->
+	<configEntry setting="ContainerDN" value="o=ccb.com,dc=ccb,dc=com" />
+	<configEntry setting="GroupsContainerDN"
+		value="ou=Groups,o=ccb.com,dc=ccb,dc=com" />
+	<configEntry setting="MailHost" value="hb_sun.ccb.com" />
+	<configEntry setting="Domain" value="ccb.com" />
+	<configEntry setting="PSTFilePassword" value="" />
+	<configEntry setting="InputDir" value="" />
+	<configEntry setting="OutputDir" value="c:/converted" />
+	<configEntry setting="LogDir" value="" />
+
+	<configEntry setting="SMTPAddressFile" value="pst2ldif.adr" />
+	<configEntry setting="SMTPPartsSeparator" value="&lt;==&gt;" />
+
+	<!-- Person attributes to be putted into resulted LDIF file -->
+	<ldifPersonEntry>
+		<ldifEntry attribute="dn"
+			value="uid={uid},ou=People,{ContainerDN}">
+			<pstItemProperty name="PR_SUBJECT" placeholder="{uid}" valueModifier="uid" />
+
+			<!--
+			<lotusDocField name="ShortName" placeholder="{uid}"
+				multivalue="true" onlyFirstValue="true" multivalueSeparator=";" />
+			<lotusDocField name="FullName" placeholder="{OrgHierarchy}"
+				multivalue="true" onlyFirstValue="true" multivalueSeparator=";" orgHierarchy="true"/>
+			-->
+			<configSetting name="ContainerDN"
+				placeholder="{ContainerDN}" />
+		</ldifEntry>
+
+		<ldifEntry attribute="changetype" value="add" />
+
+		<ldifEntry attribute="sn" value="{sn}">
+			<pstItemProperty name="PR_SURNAME" placeholder="{sn}" />
+
+			<!--
+			<lotusDocField name="LastName" placeholder="{sn}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="cn" value="{FirstName} {LastName}">
+			<pstItemProperty name="PR_GIVEN_NAME" placeholder="{FirstName}" />
+			<pstItemProperty name="PR_SURNAME" placeholder="{LastName}" />
+
+			<!--
+			<lotusDocField name="FirstName" placeholder="{FirstName}" />
+			<lotusDocField name="LastName" placeholder="{LastName}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="iplanet-am-modifiable-by"
+			value="cn=Top-level Admin Role,{ContainerDN}">
+			<configSetting name="ContainerDN"
+				placeholder="{ContainerDN}" />
+		</ldifEntry>
+		<ldifEntry attribute="givenName" value="{givenName}">
+			<pstItemProperty name="PR_GIVEN_NAME" placeholder="{givenName}" />
+
+			<!--
+			<lotusDocField name="FirstName" placeholder="{givenName}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="inetUserStatus" value="Active" />
+		<ldifEntry attribute="uid" value="{uid}">
+			<pstItemProperty name="PR_SUBJECT" placeholder="{uid}" valueModifier="uid" />
+
+			<!--
+			<lotusDocField name="ShortName" placeholder="{uid}"
+				multivalue="true" onlyFirstValue="true" multivalueSeparator=";" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="userPassword"
+			value="{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=" />
+		<ldifEntry attribute="telephonenumber"
+			value="{OfficePhoneNumber}">
+			<pstItemProperty name="PR_BUSINESS_TELEPHONE_NUMBER" placeholder="{OfficePhoneNumber}" />
+
+			<!--
+			<lotusDocField name="OfficePhoneNumber"
+				placeholder="{OfficePhoneNumber}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="mobile" value="{CellPhoneNumber}">
+			<pstItemProperty name="PR_CELLULAR_TELEPHONE_NUMBER" placeholder="{CellPhoneNumber}" />
+
+			<!--
+			<lotusDocField name="CellPhoneNumber"
+				placeholder="{CellPhoneNumber}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="pager" value="{Pager}">
+			<pstItemProperty name="PR_BEEPER_TELEPHONE_NUMBER" placeholder="{Pager}" />
+
+			<!--
+			<lotusDocField name="PhoneNumber_6"
+				placeholder="{PhoneNumber_6}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="facsimiletelephonenumber"
+			value="{OfficeFAXPhoneNumber}">
+			<pstItemProperty name="PR_BUSINESS_FAX_NUMBER" placeholder="{OfficeFAXPhoneNumber}" />
+ 
+			<!--
+			<lotusDocField name="OfficeFAXPhoneNumber"
+				placeholder="{OfficeFAXPhoneNumber}" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="l" value="{OfficeCity}, {OfficeState}">
+			<pstItemProperty name="PR_BUSINESS_ADDRESS_CITY" placeholder="{OfficeCity}" />
+			<pstItemProperty name="PR_BUSINESS_ADDRESS_STATE_OR_PROVINCE" placeholder="{OfficeState}" />
+
+			<!--
+			<lotusDocField name="OfficeCity" placeholder="{OfficeCity}" />
+			<lotusDocField name="OfficeState"
+				placeholder="{OfficeState}" />
+			-->
+		</ldifEntry>
+
+		<ldifEntry attribute="mailDeliveryOption" value="mailbox" />
+		<ldifEntry attribute="mail" value="{InternetAddress}">
+			<pstItemProperty name="0x8083" placeholder="{InternetAddress}" namedProperty="true" />
+
+			<!--
+			<lotusDocField name="InternetAddress" placeholder="{InternetAddress}"
+				multivalue="true" onlyFirstValue="true" multivalueSeparator=";" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="mailHost" value="{MailHost}">
+			<configSetting name="MailHost" placeholder="{MailHost}" />
+		</ldifEntry>
+		<ldifEntry attribute="mailUserStatus" value="active" />
+		<ldifEntry attribute="mailQuota" value="-1" />
+		<ldifEntry attribute="mailMsgQuota" value="-1" />
+
+		<ldifEntry attribute="objectClass" value="userpresenceprofile" />
+		<ldifEntry attribute="objectClass" value="icscalendaruser" />
+		<ldifEntry attribute="objectClass"
+			value="iplanet-am-user-service" />
+		<ldifEntry attribute="objectClass" value="top" />
+		<ldifEntry attribute="objectClass"
+			value="iplanet-am-managed-person" />
+		<ldifEntry attribute="objectClass" value="inetadmin" />
+		<ldifEntry attribute="objectClass" value="organizationalperson" />
+		<ldifEntry attribute="objectClass" value="person" />
+		<ldifEntry attribute="objectClass" value="inetuser" />
+		<ldifEntry attribute="objectClass"
+			value="inetlocalmailrecipient" />
+		<ldifEntry attribute="objectClass" value="iplanetpreferences" />
+		<ldifEntry attribute="objectClass" value="ipuser" />
+		<ldifEntry attribute="objectClass" value="inetorgperson" />
+		<ldifEntry attribute="objectClass" value="inetsubscriber" />
+		<ldifEntry attribute="objectClass" value="inetmailuser" />
+		<ldifEntry attribute="objectClass" value="sunUCPreferences" />
+
+		<ldifEntry attribute="icsStatus" value="Active" />
+		<ldifEntry attribute="icsCalendar"
+			value="{FirstName}@{Domain}">
+			<pstItemProperty name="PR_GIVEN_NAME" placeholder="{FirstName}" />
+
+			<!--
+			<lotusDocField name="FirstName" placeholder="{FirstName}" />
+			-->
+			<configSetting name="Domain" placeholder="{Domain}" />
+		</ldifEntry>
+		<ldifEntry attribute="icsTimezone" value="America/Denver" />
+		<ldifEntry attribute="icsSubscribed"
+			value="{FirstName}@{Domain}${FirstName} {LastName}">
+			<pstItemProperty name="PR_GIVEN_NAME" placeholder="{FirstName}" />
+			<pstItemProperty name="PR_SURNAME" placeholder="{LastName}" />
+
+			<!--
+			<lotusDocField name="FirstName" placeholder="{FirstName}" />
+			<lotusDocField name="LastName" placeholder="{LastName}" />
+			-->
+			<configSetting name="Domain" placeholder="{Domain}" />
+		</ldifEntry>
+		<ldifEntry attribute="icsCalendarOwned"
+			value="{FirstName}@{Domain}${FirstName} {LastName}">
+			<pstItemProperty name="PR_GIVEN_NAME" placeholder="{FirstName}" />
+			<pstItemProperty name="PR_SURNAME" placeholder="{LastName}" />
+
+			<!--
+			<lotusDocField name="FirstName" placeholder="{FirstName}" />
+			<lotusDocField name="LastName" placeholder="{LastName}" />
+			-->
+			<configSetting name="Domain" placeholder="{Domain}" />
+		</ldifEntry>
+
+		<ldifEntry attribute="sunUCDefaultApplication" value="mail" />
+		<ldifEntry attribute="sunUCTheme" value="uwc" />
+		<ldifEntry attribute="sunUCColorScheme" value="2" />
+		<ldifEntry attribute="sunUCDefaultEmailHandler" value="uc" />
+		<ldifEntry attribute="sunUCDateFormat" value="M/D/Y" />
+		<ldifEntry attribute="sunUCDateDelimiter" value="/" />
+		<ldifEntry attribute="sunUCTimeFormat" value="12" />
+		<ldifEntry attribute="sunUCExtendedUserPrefs"
+			value="sunUCInitialized=true" />
+		<ldifEntry attribute="sunUCTimeZone" value="China/Wuhan" />
+
+		<ldifEntry attribute="preferredLanguage" value="en" />
+		<ldifEntry attribute="preferredLocale" value="en" />
+	</ldifPersonEntry>
+
+	<!-- Group attributes to be putted into resulted LDIF file -->
+	<ldifGroupEntry>
+		<ldifEntryFilter pstItemProperty="0x8083" value="" namedProperty="true" condition="NOT EQUAL" />
+
+		<!--
+		<ldifEntryFilter lotusDocField="InternetAddress" value="" condition="NOT EQUAL" />
+		<ldifEntryFilter lotusDocField="Members" value="" condition="ONLY USERS" />
+		-->
+
+		<ldifEntry attribute="changetype" value="add" />
+
+		<ldifEntry attribute="dn"
+			value="cn={GroupName},ou=Groups,{GroupsContainerDN}">
+			<pstItemProperty name="PR_SUBJECT" placeholder="{GroupName}" />
+
+			<!--
+			<lotusDocField name="ListName" placeholder="{GroupName}" extractCN="true" />
+			<lotusDocField name="ListName" placeholder="{OrgHierarchy}" 
+				multivalue="true" onlyFirstValue="true" multivalueSeparator=";" orgHierarchy="true"/>
+			-->
+			<configSetting name="GroupsContainerDN"
+				placeholder="{GroupsContainerDN}" />
+		</ldifEntry>
+		<ldifEntry attribute="objectClass" value="top" />
+		<ldifEntry attribute="objectClass" value="groupOfUniqueNames" />
+		<ldifEntry attribute="cn" value="{ListName}">
+			<pstItemProperty name="PR_SUBJECT" placeholder="{ListName}" />
+
+			<!--
+			<lotusDocField name="ListName" placeholder="{ListName}" extractCN="true" />
+			-->
+		</ldifEntry>
+		<ldifEntry attribute="uniqueMember"
+			value="uid={uid},{ContainerDN}">
+			<pstItemProperty name="0x8054" placeholder="{uid}" namedProperty="true" valueModifier="uid"/>
+
+			<!--
+			<lotusDocField name="Members" placeholder="{uid}"
+				resolveDocField="ShortName" resolveDocForm="Person" resolveDocLookupField="FullName"
+				multivalue="true" multivalueSeparator=";" onlyFirstValue="false" />
+			-->
+			<configSetting name="ContainerDN"
+				placeholder="{ContainerDN}" />
+		</ldifEntry>
+	</ldifGroupEntry>
+</tns:directoryManager>
